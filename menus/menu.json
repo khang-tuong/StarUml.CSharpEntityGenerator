@@ -1,0 +1,20 @@
+{
+    "menu": [
+        {
+            "id": "tools",
+            "submenu": [
+                {
+                    "label": "C# entity generate",
+                    "id": "csharp.entity",
+                    "submenu": [
+                        {
+                            "label": "Generate...",
+                            "id": "csharp.entity.generate",
+                            "command": "csharp.entity:generate"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
