@@ -1,4 +1,12 @@
-const valueTypes = ["int", "bool", "decimal", "float", "double", "byte", "long"]
+const valueTypes = [
+    "int",
+    "bool",
+    "decimal",
+    "float",
+    "double",
+    "byte",
+    "long",
+];
 
 class EntityWriter {
     constructor(entity, relationships) {
@@ -8,19 +16,20 @@ class EntityWriter {
     }
 
     writeUsing() {
-        this.lines.push("using System;")
-        this.lines.push("using System.ComponentModel.DataAnnotations;")
+        this.lines.push("using System;");
+        this.lines.push("using System.ComponentModel.DataAnnotations;");
+        this.lines.push("using System.ComponentModel.DataAnnotations.Schema;");
         this.lines.push("");
     }
 
     writeNamespace() {
         this.lines.push("namespace CsharpEnttiyGenerator");
-        this.lines.push("{")
+        this.lines.push("{");
     }
 
     writeClass() {
         this.lines.push(`    public class ${this.entity.name}Entity`);
-        this.lines.push(`    {`)
+        this.lines.push(`    {`);
     }
 
     writeProps() {
@@ -38,22 +47,30 @@ class EntityWriter {
             // Add auto-generated Id for primary key type of Guid
             // If this prop is also a foreign key (on weak entity) then pass this
             if (prop.primaryKey && prop.type === "Guid" && !prop.foreignKey) {
-                this.lines.push(`        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]`)
+                this.lines.push(
+                    `        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]`
+                );
             }
 
             if (prop.nullable) {
-                // nullable string prop won't have '?' 
+                // nullable string prop won't have '?'
                 if (prop.type !== "string") {
-                    this.lines.push(`        public ${prop.type}? ${prop.name} { get; set; }`)
+                    this.lines.push(
+                        `        public ${prop.type}? ${prop.name} { get; set; }`
+                    );
                 }
             } else {
-                if (valueTypes.indexOf(prop.type) >= 0 || prop.type === "string") {
+                if (
+                    valueTypes.indexOf(prop.type) >= 0 ||
+                    prop.type === "string"
+                ) {
                     this.lines.push(`        [Required]`);
                 }
-                this.lines.push(`        public ${prop.type} ${prop.name} { get; set; }`);
+                this.lines.push(
+                    `        public ${prop.type} ${prop.name} { get; set; }`
+                );
             }
 
-            
             // Avoid adding redundant empty line
             if (i < this.entity.props.length - 1) this.lines.push("");
         }
@@ -67,20 +84,34 @@ class EntityWriter {
                 const rel = this.relationships[i];
                 if (rel.end1.table === this.entity.name) {
                     // By default, it will add 's' to the name of the collection
-                    if (rel.end1.cardinality === "1" || rel.end1.cardinality === "0..1") {
-                        this.lines.push(`        public IList<${rel.end2.table}> ${rel.end2.table}s { get; set; }`);
+                    if (
+                        rel.end1.cardinality === "1" ||
+                        rel.end1.cardinality === "0..1"
+                    ) {
+                        this.lines.push(
+                            `        public IList<${rel.end2.table}> ${rel.end2.table}s { get; set; }`
+                        );
                     } else if (rel.end1.cardinality === "0..*") {
-                        this.lines.push(`        public ${rel.end2.table} ${rel.end2.table} { get; set; }`);
+                        this.lines.push(
+                            `        public ${rel.end2.table} ${rel.end2.table} { get; set; }`
+                        );
                     }
                 } else {
                     // By default, it will add 's' to the name of the collection
-                    if (rel.end2.cardinality === "1" || rel.end2.cardinality === "0..1") {
-                        this.lines.push(`        public IList<${rel.end1.table}> ${rel.end1.table}s { get; set; }`);
+                    if (
+                        rel.end2.cardinality === "1" ||
+                        rel.end2.cardinality === "0..1"
+                    ) {
+                        this.lines.push(
+                            `        public IList<${rel.end1.table}> ${rel.end1.table}s { get; set; }`
+                        );
                     } else if (rel.end2.cardinality === "0..*") {
-                        this.lines.push(`        public ${rel.end1.table} ${rel.end1.table} { get; set; }`);
+                        this.lines.push(
+                            `        public ${rel.end1.table} ${rel.end1.table} { get; set; }`
+                        );
                     }
                 }
-                
+
                 // Avoid adding redundant empty line
                 if (i < this.relationships.length - 1) this.lines.push("");
             }
@@ -95,7 +126,7 @@ class EntityWriter {
     getData() {
         this.writeUsing();
         this.writeNamespace();
-        this.writeClass()
+        this.writeClass();
         this.writeProps();
         this.writeRelationships();
         this.writeConclusion();
@@ -103,4 +134,4 @@ class EntityWriter {
     }
 }
 
-exports.EntityWriter = EntityWriter
+exports.EntityWriter = EntityWriter;
