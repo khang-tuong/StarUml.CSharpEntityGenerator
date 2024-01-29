@@ -1,20 +1,20 @@
 {
-    "name": "khang-tuong.staruml.csharp-entity-generator",
-    "title": "StarUML C# Entity Generator",
-    "description": "An extension for StarUML to generate C# .NET Core Entity files ",
-    "homepage": "https://github.com/khang-tuong/StarUml.CSharpEntityGenerator",
-    "version": "1.0.0",
-    "keywords": [
-        "csharpEntityGenerator",
-        "staruml.csharpEntityGenerator"
-    ],
-    "author": {
-        "name": "Duc Khang Tuong",
-        "email": "duckhangtuong@gmail.com",
-        "url": "https://github.com/khang-tuong"
-    },
-    "license": "MIT",
-    "engines": {
-        "staruml": ">=3.0.0"
-    }
+  "name": "khang-tuong.staruml.csharp-entity-generator",
+  "title": "StarUML C# Entity Generator",
+  "description": "An extension for StarUML to generate C# .NET Core Entity files ",
+  "homepage": "https://github.com/khang-tuong/StarUml.CSharpEntityGenerator",
+  "version": "1.0.0",
+  "keywords": [
+    "csharpEntityGenerator",
+    "staruml.csharpEntityGenerator"
+  ],
+  "author": {
+    "name": "Duc Khang Tuong",
+    "email": "duckhangtuong@gmail.com",
+    "url": "https://github.com/khang-tuong"
+  },
+  "license": "MIT",
+  "engines": {
+    "staruml": ">=3.0.0"
+  }
 }
