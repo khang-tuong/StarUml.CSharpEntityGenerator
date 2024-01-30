@@ -77,7 +77,7 @@ class CodeGenerator {
         info
       );
       fs.writeFileSync(
-        filePath + `\\${entity.name}Entity.cs`,
+        filePath + `\\${entity.name}.cs`,
         entityWriter.getData()
       );
     }

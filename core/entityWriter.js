@@ -29,7 +29,7 @@ class EntityWriter {
   }
 
   writeClass() {
-    this.lines.push(`    public class ${this.entity.name}Entity`);
+    this.lines.push(`    public class ${this.entity.name}`);
     this.lines.push(`    {`);
   }
 
