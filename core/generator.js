@@ -1,6 +1,7 @@
 const fs = require("fs");
 const writer = require("./entityWriter");
 const path = require("path");
+const contextWriter = require("./context-writer");
 
 class CodeGenerator {
   constructor() {
@@ -80,6 +81,15 @@ class CodeGenerator {
         entityWriter.getData()
       );
     }
+
+    let cWriter = new contextWriter.ContextWriter(
+      this.entities,
+      this.relationships,
+      info.namespace
+    );
+
+    let contextLines = cWriter.getLines();
+    fs.writeFileSync(filePath + `\\ApplicationDbContext.cs`, contextLines);
   }
 }
 
