@@ -8,6 +8,8 @@ const valueTypes = [
   "long"
 ];
 
+const stringUtils = require("./string-utils");
+
 class EntityWriter {
   constructor(entity, relationships, info) {
     this.lines = [];
@@ -61,11 +63,8 @@ class EntityWriter {
           );
         }
       } else {
-        if (valueTypes.indexOf(prop.type) >= 0 || prop.type === "string") {
-          this.lines.push(`        [Required]`);
-        }
         this.lines.push(
-          `        public ${prop.type} ${prop.name} { get; set; }`
+          `        public required ${prop.type} ${prop.name} { get; set; }`
         );
       }
 
@@ -84,7 +83,9 @@ class EntityWriter {
           // By default, it will add 's' to the name of the collection
           if (rel.end1.cardinality === "1" || rel.end1.cardinality === "0..1") {
             this.lines.push(
-              `        public IList<${rel.end2.table}> ${rel.end2.table}s { get; set; }`
+              `        public ICollection<${
+                rel.end2.table
+              }> ${stringUtils.getPluralName(rel.end2.table)} { get; set; }`
             );
           } else if (rel.end1.cardinality === "0..*") {
             this.lines.push(
@@ -95,7 +96,9 @@ class EntityWriter {
           // By default, it will add 's' to the name of the collection
           if (rel.end2.cardinality === "1" || rel.end2.cardinality === "0..1") {
             this.lines.push(
-              `        public IList<${rel.end1.table}> ${rel.end1.table}s { get; set; }`
+              `        public IList<${
+                rel.end1.table
+              }> ${stringUtils.getPluralName(rel.end1.table)} { get; set; }`
             );
           } else if (rel.end2.cardinality === "0..*") {
             this.lines.push(

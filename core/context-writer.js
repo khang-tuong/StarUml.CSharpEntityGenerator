@@ -1,3 +1,5 @@
+const stringUtils = require("./string-utils");
+
 class ContextWriter {
   constructor(entities, relationships, namespace) {
     this.entities = entities;
@@ -49,7 +51,11 @@ class ContextWriter {
       const rel = this.relationships[i];
       if (rel.end1.cardinality === "1" || rel.end1.cardinality === "0..1") {
         this.lines.push(`        modelBuilder.Entity<${rel.end1.table}>()`);
-        this.lines.push(`            .HasMany(x => x.${rel.end2.table}s)`);
+        this.lines.push(
+          `            .HasMany(x => x.${stringUtils.getPluralName(
+            rel.end2.table
+          )})`
+        );
         this.lines.push(`            .WithOne(y => y.${rel.end1.table})`);
         this.lines.push(
           `            .HasForeignKey(y => y.${rel.end1.table}Id);`
@@ -57,7 +63,11 @@ class ContextWriter {
       } else {
         this.lines.push(`        modelBuilder.Entity<${rel.end2.table}>()`);
         this.lines.push(`            .HasOne(x => x.${rel.end2.table})`);
-        this.lines.push(`            .WithMany(y => y.${rel.end1.table}s)`);
+        this.lines.push(
+          `            .WithMany(y => y.${stringUtils.getPluralName(
+            rel.end1.table
+          )})`
+        );
         this.lines.push(
           `            .HasForeignKey(x => x.${rel.end2.table}Id);`
         );
