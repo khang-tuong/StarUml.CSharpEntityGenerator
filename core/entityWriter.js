@@ -57,11 +57,9 @@ class EntityWriter {
 
       if (prop.nullable) {
         // nullable string prop won't have '?'
-        if (prop.type !== "string") {
-          this.lines.push(
-            `        public ${prop.type}? ${prop.name} { get; set; }`
-          );
-        }
+        this.lines.push(
+          `        public ${prop.type}? ${prop.name} { get; set; }`
+        );
       } else {
         this.lines.push(
           `        public required ${prop.type} ${prop.name} { get; set; }`
