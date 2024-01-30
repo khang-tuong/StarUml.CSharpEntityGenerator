@@ -3,7 +3,7 @@
   "title": "StarUML C# Entity Generator",
   "description": "An extension for StarUML to generate C# .NET Core Entity files ",
   "homepage": "https://github.com/khang-tuong/StarUml.CSharpEntityGenerator",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "keywords": [
     "csharpEntityGenerator",
     "staruml.csharpEntityGenerator"
